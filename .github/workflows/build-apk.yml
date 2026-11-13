@@ -1,4 +1,4 @@
-name: Build Sentinel AI APK
+I name: Build Sentinel AI APK
 
 on:
   workflow_dispatch:
@@ -31,12 +31,12 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.11.1'
-
+l I 
       - name: Align Kotlin JVM target with Java
         run: |
           cat > "$PROJECT_DIR/jvm-target.init.gradle" <<'EOF'
           allprojects {
-            afterEvaluate {
+      l       afterEvaluate {
               tasks.matching { it.name.toLowerCase().contains("kotlin") && it.hasProperty("kotlinOptions") }.configureEach {
                 kotlinOptions.jvmTarget = "1.8"
               }
