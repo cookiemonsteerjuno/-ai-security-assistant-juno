@@ -1,1 +1,42 @@
-        run: gradle --no-daemon assembleDebug
+name: Build Sentinel AI APK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract Android project
+        run: |
+          unzip -q SentinelAI_Android_No_Studio.zip -d android-src
+          PROJECT_FILE="$(find android-src -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit)"
+          if [ -z "$PROJECT_FILE" ]; then
+            echo "Could not find the Android Gradle project in the ZIP."
+            find android-src -maxdepth 5 -type f | head -100
+            exit 1
+          fi
+          echo "PROJECT_DIR=$(dirname "$PROJECT_FILE")" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+
+      - name: Build APK
+        run: gradle --no-daemon -p "$PROJECT_DIR" assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SentinelAI-debug-apk
+          path: android-src/**/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: errorP 
