@@ -1,5 +1,5 @@
 name: Build Android APK
-
+run: gradle --no-daemon -I "$GITHUB_WORKSPACE/$PROJECT_DIR/jvm-target.init.gradle" -p "$GITHUB_WORKSPACE/$PROJECT_DIR" assembleDebug, 
 on:
   push:
     branches: [ main, master ]
