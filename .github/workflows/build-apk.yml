@@ -33,8 +33,7 @@ jobs:
           gradle-version: '8.11.1'
 
       - name: Align Kotlin JVM target with Java
-        run: |
-          cat > jvm-target.init.gradle <<'EOF'
+        run: |cat > "$PROJECT_DIR/jvm-target.init.gradle" <<'EOF'
           allprojects {
             afterEvaluate {:
               tasks.matching { it.name.toLowerCase().contains("kotlin") && it.hasProperty("kotlinOptions") }.configureEach {
