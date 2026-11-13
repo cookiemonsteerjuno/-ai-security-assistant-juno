@@ -18,7 +18,7 @@ jobs:
           unzip -q SentinelAI_Android_No_Studio.zip -d android-src
           PROJECT_FILE="$(find android-src -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit)"
           if [ -z "$PROJECT_FILE" ]; then
-            echo "Could not find the Android Gradle project in the ZIP."
+            echo "Could not find Android Gradle project."
             exit 1
           fi
           echo "PROJECT_DIR=$(dirname "$PROJECT_FILE")" >> "$GITHUB_ENV"
@@ -33,9 +33,10 @@ jobs:
           gradle-version: '8.11.1'
 
       - name: Align Kotlin JVM target with Java
-        run: |cat > "$PROJECT_DIR/jvm-target.init.gradle" <<'EOF'
+        run: |
+          cat > "$PROJECT_DIR/jvm-target.init.gradle" <<'EOF'
           allprojects {
-            afterEvaluate {:
+            afterEvaluate {
               tasks.matching { it.name.toLowerCase().contains("kotlin") && it.hasProperty("kotlinOptions") }.configureEach {
                 kotlinOptions.jvmTarget = "1.8"
               }
@@ -44,10 +45,10 @@ jobs:
           EOF
 
       - name: Build APK
-       run: gradle --no-daemon -I "$GITHUB_WORKSPACE/jvm-target.init.gradle" -p "$PROJECT_DIR" assembleDebug
+        run: gradle --no-daemon -I "$PROJECT_DIR/jvm-target.init.gradle" -p "$PROJECT_DIR" assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
           name: SentinelAI-debug-apk
           path: android-src/**/app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error, 
+          if-no-files-found: error
