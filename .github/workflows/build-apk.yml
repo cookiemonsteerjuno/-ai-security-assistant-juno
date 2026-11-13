@@ -1,54 +1,49 @@
-I name: Build Sentinel AI APK
+name: Build Android APK
 
 on:
+  push:
+    branches: [ main, master ]
   workflow_dispatch:
-
-permissions:
-  contents: read
 
 jobs:
   build:
+    name: Build APK with Capacitor and Gradle
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Extract Android project
-        run: |
-          unzip -q SentinelAI_Android_No_Studio.zip -d android-src
-          PROJECT_FILE="$(find android-src -type f \( -name settings.gradle -o -name settings.gradle.kts \) -print -quit)"
-          if [ -z "$PROJECT_FILE" ]; then
-            echo "Could not find Android Gradle project."
-            exit 1
-          fi
-          echo "PROJECT_DIR=$(dirname "$PROJECT_FILE")" >> "$GITHUB_ENV"
-
-      - uses: actions/setup-java@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          distribution: temurin
+          node-version: '20'
+
+      - name: Install Dependencies & Build Web App
+        run: |
+          npm install
+          npm run build
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
           java-version: '17'
 
-      - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.11.1'
-l I 
-      - name: Align Kotlin JVM target with Java
+      - name: Add Capacitor Android Platform & Sync
         run: |
-          cat > "$PROJECT_DIR/jvm-target.init.gradle" <<'EOF'
-          allprojects {
-      l       afterEvaluate {
-              tasks.matching { it.name.toLowerCase().contains("kotlin") && it.hasProperty("kotlinOptions") }.configureEach {
-                kotlinOptions.jvmTarget = "1.8"
-              }
-            }
-          }
-          EOF
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+          npx cap add android
+          npx cap sync android
 
-      - name: Build APK
-        run: gradle --no-daemon -I "$GITHUB_WORKSPACE/$PROJECT_DIR/jvm-target.init.gradle" -p "$GITHUB_WORKSPACE/$PROJECT_DIR" assembleDebug
+      - name: Build Debug APK with Gradle
+        working-directory: ./android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: SentinelAI-debug-apk
-          path: android-src/**/app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error
+          name: app-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
