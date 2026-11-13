@@ -45,7 +45,7 @@ jobs:
           EOF
 
       - name: Build APK
-        run: gradle --no-daemon -I "$PROJECT_DIR/jvm-target.init.gradle" -p "$PROJECT_DIR" assembleDebug
+        run: gradle --no-daemon -I "$GITHUB_WORKSPACE/$PROJECT_DIR/jvm-target.init.gradle" -p "$GITHUB_WORKSPACE/$PROJECT_DIR" assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
