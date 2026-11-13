@@ -1,0 +1,10 @@
+{
+  "name": "Sentinel AI Assistant",
+  "description": "A high-security AI dashboard and chat interface featuring real-time integrity monitoring, Cloudflare incoming packet drop shield, zero analytics logging blocker, zero node access defense, foreign states geoblocking, Bluetooth pairing kill-switch, network sharing request blocker, anti-packet inspection, 1-minute firewall reload engine, and autonomous location changing.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
