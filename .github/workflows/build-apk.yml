@@ -36,7 +36,7 @@ jobs:
         run: |
           cat > jvm-target.init.gradle <<'EOF'
           allprojects {
-            afterEvaluate {
+            afterEvaluate {:
               tasks.matching { it.name.toLowerCase().contains("kotlin") && it.hasProperty("kotlinOptions") }.configureEach {
                 kotlinOptions.jvmTarget = "1.8"
               }
@@ -45,10 +45,10 @@ jobs:
           EOF
 
       - name: Build APK
-        run: gradle --no-daemon -I jvm-target.init.gradle -p "$PROJECT_DIR" assembleDebug
+       run: gradle --no-daemon -I "$GITHUB_WORKSPACE/jvm-target.init.gradle" -p "$PROJECT_DIR" assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
           name: SentinelAI-debug-apk
           path: android-src/**/app/build/outputs/apk/debug/app-debug.apk
-          if-no-files-found: error
+          if-no-files-found: error, 
