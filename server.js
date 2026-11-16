@@ -182,3 +182,9 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, HOSTNAME, () => {
     console.log(`[SentinelAI] Master Server running at http://${HOSTNAME}:${PORT}/`);
 });
+
+
+
+git add .
+git commit -m "Add SentinelAI build configuration and server scripts"
+git push origin main
