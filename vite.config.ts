@@ -6,6 +6,11 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
+      define: {
+        // Empty by default: add GEMINI_API_KEY as a GitHub Actions secret only if
+        // you understand that a key bundled into a client app can be extracted.
+        'process.env.API_KEY': JSON.stringify(env.API_KEY || ''),
+      },
       server: {
         port: 3000,
         host: '0.0.0.0',
