@@ -4,24 +4,24 @@ import {
   AndroidSystemPatch,
   PatchSeverity,
   PatchStatus,
-} from '../types';
+} from './types';
 import {
   androidPatchScanner,
   AndroidPatchScannerSnapshot,
-} from '../services/androidPatchScanner';
+} from './services/androidPatchScanner';
 import {
   GeneratedPackageArtifact,
   MobilePackageConfig,
   PackageTargetFormat,
   generateMobilePackage,
   triggerBlobDownload,
-} from '../services/apkPackager';
+} from './services/apkPackager';
 import {
   inspectPWAReadiness,
   PWAReadinessReport,
   usePWAInstall,
   warmOfflineCache,
-} from '../services/usePWAInstall';
+} from './services/usePWAInstall';
 import InboundCommsMonitor from './InboundCommsMonitor';
 import SimSwitchLockPanel from './SimSwitchLockPanel';
 

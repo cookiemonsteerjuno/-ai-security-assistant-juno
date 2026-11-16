@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { DeviceCommand, CommandSeverity, CommandExecutionStatus } from '../types';
-import { audioAnnouncer } from '../services/audioAnnouncer';
+import { DeviceCommand, CommandSeverity, CommandExecutionStatus } from './types';
+import { audioAnnouncer } from './services/audioAnnouncer';
 
 interface DeviceCommandsMonitorProps {
   stealthMode?: boolean;

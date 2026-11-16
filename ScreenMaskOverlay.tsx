@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ScreenMaskMode, ScreenMaskState } from '../types';
-import { screenMaskService } from '../services/screenMaskService';
+import { ScreenMaskMode, ScreenMaskState } from './types';
+import { screenMaskService } from './services/screenMaskService';
 
 interface ScreenMaskOverlayProps {
   theme?: 'dark' | 'light';
