@@ -1,20 +1,18 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# SENTINEL-X | High-Security Operations Console
 
-# Run and deploy your AI Studio app
+Combined Vite + React + TypeScript + Tailwind + PWA/Android project integrating all modules from your **Sentinel Ai Assistant** document into the complete multi-file build structure.
 
-This contains everything you need to run your app locally.
+## Quick Build
 
-View your app in AI Studio: https://ai.studio/apps/3d5e6da6-d82e-43f9-80b6-e43e9c556f09
+```bash
+npm install
+npm run build
+```
 
-## Run Locally
+## Included Structure
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+- `index.html`, `index.css`, `vite.config.ts`, `tsconfig.json`, `package.json`
+- `public/manifest.webmanifest`, `public/icon-192.png`, `public/icon-512.png`
+- `src/types.ts`, `src/constants.ts`, `src/App.tsx`, `src/main.tsx`, `src/index.css`
+- `src/components/`: `SecurityDashboard.tsx`, `DeviceCommandsMonitor.tsx`, `NetworkRoutingShield.tsx`, `MobileCenter.tsx`, `ChatInterface.tsx`, `SettingsMenu.tsx`, `PWAInstallButton.tsx` (exports both `PWAInstallButton` and `OfflineIndicator`), `ScreenMaskOverlay.tsx`
+- `src/services/`: `audioEngine.ts`, `apkPackager.ts`, `screenMaskService.ts`, `securityModulesService.ts`

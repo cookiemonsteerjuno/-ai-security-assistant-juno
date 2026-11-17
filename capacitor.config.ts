@@ -1,12 +1,11 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.sentinelai.assistant',
-  appName: 'Sentinel AI Assistant',
+  appId: 'io.sentinelx.security.app',
+  appName: 'Sentinel-X',
   webDir: 'dist',
-  bundledWebRuntime: false,
-  android: {
-    allowMixedContent: false,
+  server: {
+    androidScheme: 'https',
   },
 };
 
